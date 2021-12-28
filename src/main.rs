@@ -13,6 +13,12 @@ pub extern "C" fn _start() -> ! {
 
     blog_os::init();
 
+    let ptr = 0x205221 as *mut u32;
+
+    use x86_64::registers::control::Cr3;
+    let (level_4_page_table, _) = Cr3::read();
+    println!("Level 4 page table at: {:?}", level_4_page_table.start_address());
+
     #[cfg(test)]
     test_main();
 
